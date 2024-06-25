@@ -1,13 +1,15 @@
 import { RouterProvider } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
 import AuthRoutes from "./feature/auth/routes";
+import AdminRoutes from "./feature/admin/routes/main.routes";
 
 const App = () => {
-  const routes = AuthRoutes;
+  const isAuthenticated = true;
+  const routes = isAuthenticated ? AdminRoutes : AuthRoutes;
 
   return (
     <>
-      <AuthProvider isAuthenticated={true}>
+      <AuthProvider isAuthenticated={isAuthenticated}>
         <RouterProvider router={routes} />
       </AuthProvider>
     </>

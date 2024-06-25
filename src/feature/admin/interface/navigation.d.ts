@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export interface NavigationValue {
+export interface ProfileLinkValue {
   label: string;
   icon?: ReactNode | null;
   path: string;
