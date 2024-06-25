@@ -1,9 +1,8 @@
 import YStack from "@/components/container/YStack";
-import DatePicker from "@/components/form/DatePicker";
 import InputField from "@/components/form/InputField";
 import SelectField from "@/components/form/SelectField";
 
-const PerosnalInfoForm = () => {
+const PersonalInfoStep = () => {
   return (
     <YStack className="gap-4">
       <InputField
@@ -27,11 +26,15 @@ const PerosnalInfoForm = () => {
             { label: "Female", value: "Female" },
           ]}
         />
-
-        <DatePicker label="Birth date" name="birthDate" />
+        <InputField
+          type="date"
+          label="Birth Date"
+          name="birthDate"
+          placeholder="Enter your last name"
+        />
       </div>
     </YStack>
   );
 };
 
-export default PerosnalInfoForm;
+export default PersonalInfoStep;

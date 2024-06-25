@@ -5,50 +5,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import YStack from "../container/YStack";
-
 import { FC, SelectHTMLAttributes } from "react";
-import { Label } from "../ui/label";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "../ui/form";
+
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
+  label?: string;
+  description?: string;
+  placeholder: string;
+  options: SelectOptions[];
+}
 
 interface SelectOptions {
   label: string;
   value: string;
 }
 
-interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  placeholder: string;
-  options: SelectOptions[];
-}
-
-const SelectField: FC<Props> = ({ label, placeholder, options, name }) => {
-  const { control } = useFormContext();
+const SelectField: FC<Props> = ({
+  label,
+  placeholder,
+  options,
+  description,
+  name,
+}) => {
+  const form = useFormContext();
 
   return (
-    <Controller
-      control={control}
-      name={name || "N/A"}
+    <FormField
+      control={form.control}
+      name={name || "name"}
       render={({ field }) => (
-        <YStack>
-          <Label className="mb-2">{label}</Label>
-          <Select
-            value={field.value}
-            onValueChange={field.onChange}
-            disabled={field.disabled}>
-            <SelectTrigger>
-              <SelectValue placeholder={placeholder} />
-            </SelectTrigger>
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+            </FormControl>
             <SelectContent>
-              {options &&
-                options.map((option) => (
-                  <SelectItem key={option.label} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
+              {options.map((option) => (
+                <SelectItem value={option.value}>{option.label}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
-        </YStack>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
       )}
     />
   );

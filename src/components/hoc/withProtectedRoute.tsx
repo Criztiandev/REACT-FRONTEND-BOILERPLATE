@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const withProtectedRoute = (WrappedComponent: any) => {
   return (props: any) => {
-    const user = useAuth(); // Assuming useAuth returns an object with user details
+    const user = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
       if (user === null || !user.isAuthenticated) {
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       }
     }, [user, navigate]);
 

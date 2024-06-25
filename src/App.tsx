@@ -7,7 +7,7 @@ const App = () => {
 
   return (
     <>
-      <AuthProvider isAuthenticated={false}>
+      <AuthProvider isAuthenticated={true}>
         <RouterProvider router={routes} />
       </AuthProvider>
     </>

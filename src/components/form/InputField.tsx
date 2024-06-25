@@ -1,40 +1,38 @@
-import YStack from "../container/YStack";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { FC, InputHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "../ui/form";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  description?: string;
 }
 
-const InputField: FC<Props> = ({ label, ...props }) => {
-  const { register, formState } = useFormContext();
-  const { errors } = formState;
-
+const InputField: FC<Props> = ({ label, description, ...props }) => {
+  const form = useFormContext();
   return (
-    <YStack>
-      {label && <Label className="mb-2">{label}</Label>}
-      <Input
-        {...register(props.name || "N/A")}
-        {...props}
-        className={cn(
-          `${
-            errors[`${props.name}`] &&
-            "border-[1.5px] border-red-600 focus:border-red-600"
-          }`,
-          props.className,
-        )}
-      />
-
-      {errors[`${props.name}`] && (
-        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
-          <span className="font-medium">Oops!</span>{" "}
-          {errors[`${props.name}`]?.message as string}
-        </p>
+    <FormField
+      control={form.control}
+      name={props?.name || "name"}
+      render={({ field }) => (
+        <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            <Input {...props} {...field} className={cn("", props.className)} />
+          </FormControl>
+          {description && <FormDescription>{description}</FormDescription>}
+          <FormMessage />
+        </FormItem>
       )}
-    </YStack>
+    />
   );
 };
 
