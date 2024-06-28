@@ -1,47 +1,57 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Topbar from "./Topbar";
 import Wrapper from "../components/container/Wrapper";
-import { ScrollArea } from "../components/ui/scroll-area";
 import { FC, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import Sidebar from "./Sidebar";
-import { NavigationValue } from "@/interface/routes";
+import { NavigationRouteValue } from "@/interface/routes";
 
 import NotificationSheet from "@/shared/container/sheet/NotificationSheet";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { notificationPanelAtom } from "@/service/state/account.atom";
+import { sidebarPanelAtom } from "@/service/state/general.atom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  profileRoutes: NavigationValue[];
+  profileRoutes: NavigationRouteValue[];
+  sidebarRoute: NavigationRouteValue[];
 }
 
-const Layout: FC<Props> = ({ children, profileRoutes = [], ...props }) => {
+const Layout: FC<Props> = ({
+  children,
+  profileRoutes = [],
+  sidebarRoute = [],
+  ...props
+}) => {
   const [notificationPanelValue, setNotificationPanelValue] = useAtom(
     notificationPanelAtom,
   );
+  const isSidebarToggle = useAtomValue(sidebarPanelAtom);
+  // ml-[17.2rem]
   return (
     <>
-      <main className="h-screen overflow-hidden">
+      <div className="">
         <Topbar routes={profileRoutes} />
         <Wrapper>
-          <Sidebar />
+          <Sidebar routes={sidebarRoute} />
           <div
             {...props}
             className={cn(
-              "w-fullborder ml-[17.2rem] h-full p-4",
+              `border ${isSidebarToggle ? "ml-[17.2rem]" : "ml-[5rem] p-4"}`,
               props.className,
             )}
           >
-            <ScrollArea>{children}</ScrollArea>
+            <main className="mt-[64px] p-4">{children}</main>
           </div>
         </Wrapper>
-      </main>
+      </div>
 
-      <NotificationSheet
-        title="Notification"
-        open={notificationPanelValue}
-        onOpenChange={() => setNotificationPanelValue((prev) => !prev)}
-      />
+      {notificationPanelValue && (
+        <NotificationSheet
+          title="Notification"
+          open={notificationPanelValue}
+          onOpenChange={() => setNotificationPanelValue((prev) => !prev)}
+        />
+      )}
     </>
   );
 };

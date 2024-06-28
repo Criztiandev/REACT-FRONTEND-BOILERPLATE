@@ -1,6 +1,6 @@
-import { ProfileNavigationValue } from "../interface/navigation";
+import { ProfileNavigationRouteValue } from "../interface/navigation";
 
-export const ProfileNavigationList: ProfileNavigationValue[] = [
+export const ProfileNavigationList: ProfileNavigationRouteValue[] = [
   { label: "Profile", path: "/profile" },
   { label: "Settings", path: "/settings" },
 ];

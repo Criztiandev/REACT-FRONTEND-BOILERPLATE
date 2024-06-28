@@ -13,18 +13,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { NavigationValue } from "@/interface/routes";
+import { NavigationRouteValue } from "@/interface/routes";
 import { Link } from "react-router-dom";
 import { useTheme } from "@/provider/ThemeProvider";
 import { useSetAtom } from "jotai";
 import { notificationPanelAtom } from "@/service/state/account.atom";
+import { sidebarPanelAtom } from "@/service/state/general.atom";
 
 interface Props {
-  routes: NavigationValue[];
+  routes: NavigationRouteValue[];
 }
 
 const Topbar: FC<Props> = ({ routes }) => {
   const { setTheme, theme } = useTheme();
+  const setSideBarPanel = useSetAtom(sidebarPanelAtom);
   const setNotificationPanel = useSetAtom(notificationPanelAtom);
 
   const handleChangeTheme = () => {
@@ -36,17 +38,18 @@ const Topbar: FC<Props> = ({ routes }) => {
   };
 
   return (
-    <XStack className="relative z-10 w-full items-center justify-between border border-b bg-background p-3 pr-5">
+    <XStack className="fixed z-10 w-full items-center justify-between border border-b bg-background p-3 pr-5">
       <XStack className="items-center gap-4">
         <Button
           variant="ghost"
           size="icon"
           className="opacity-50 hover:opacity-100"
+          onClick={() => setSideBarPanel((prev) => !prev)}
         >
-          <Menu fill="black" />
+          <Menu />
         </Button>
 
-        <div className="text-[24px] font-bold">DEBESMSCAT</div>
+        <div className="text-[24px] font-bold">Logo</div>
       </XStack>
 
       <XStack className="gap-4">
@@ -57,7 +60,7 @@ const Topbar: FC<Props> = ({ routes }) => {
           className="opacity-50 hover:opacity-100"
           onClick={() => setNotificationPanel((prev: boolean) => !prev)}
         >
-          <Bell fill={theme === "dark" ? "white" : "black"} />
+          <Bell />
         </Button>
 
         {/* Theme Button */}
@@ -67,7 +70,7 @@ const Topbar: FC<Props> = ({ routes }) => {
           className="opacity-50 hover:opacity-100"
           onClick={handleChangeTheme}
         >
-          {theme === "dark" ? <Sun fill="white" /> : <Moon fill="black" />}
+          {theme === "dark" ? <Sun /> : <Moon />}
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -85,7 +88,7 @@ const Topbar: FC<Props> = ({ routes }) => {
 
             {routes?.map(({ label, path, icon }) => (
               <DropdownMenuItem key={label}>
-                <Link to={path} className="flex items-center gap-2">
+                <Link to={path || ""} className="flex items-center gap-2">
                   {icon}
                   {label}
                 </Link>
