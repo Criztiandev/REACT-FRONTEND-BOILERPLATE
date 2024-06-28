@@ -1,5 +1,5 @@
 import DataTable from "@/components/table/DataTable";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { FormProvider, useForm } from "react-hook-form";
 import SelectField from "@/components/form/SelectField";
 import XStack from "@/components/container/XStack";
@@ -103,29 +103,32 @@ const LeadOverviewTable = () => {
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <XStack className="items-center justify-between">
-          <h2 className="text-[24px] font-bold">Lead Overview</h2>
+    <Card className="flex flex-col gap-4">
+      <XStack className="items-center justify-between px-4 pt-4">
+        <h2 className="text-[24px] font-bold">Lead Overview</h2>
 
-          <XStack>
-            <FormProvider {...form}>
-              <SelectField
-                placeholder="Current week"
-                name="reportAt"
-                options={[
-                  { label: "Month", value: "month" },
-                  { label: "Year", value: "year" },
-                ]}
-              />
-            </FormProvider>
-          </XStack>
+        <XStack>
+          <FormProvider {...form}>
+            <SelectField
+              placeholder="Current week"
+              name="reportAt"
+              options={[
+                { label: "Month", value: "month" },
+                { label: "Year", value: "year" },
+              ]}
+            />
+          </FormProvider>
         </XStack>
-      </CardHeader>
-      <DataTable<ReportOverviewValue>
-        data={ReportData}
-        columns={ReportOverviewColumn}
-      />
+      </XStack>
+
+      <CardContent className="flex flex-col gap-4 p-2">
+        <DataTable<ReportOverviewValue>
+          data={ReportData}
+          columns={ReportOverviewColumn}
+          height="540px"
+          capacity={5}
+        />
+      </CardContent>
     </Card>
   );
 };

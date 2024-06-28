@@ -1,19 +1,40 @@
 import XStack from "@/components/container/XStack";
 import YStack from "@/components/container/YStack";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye, FileDown, Plus, Trash2 } from "lucide-react";
+import { FileDown, Plus } from "lucide-react";
 
 import DataTable from "@/components/table/DataTable";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 
 type Person = {
   id: string | number;
@@ -91,67 +112,163 @@ const columns: ColumnDef<Person, any>[] = [
 
 const UserScreen = () => {
   return (
-    <div>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/" className="flex items-center gap-2">
-              Home
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>List</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <div className="my-4">
-        <YStack className="mb-4">
-          <h3 className="text-2xl font-bold">All Users</h3>
-          <span>Manage users</span>
+    <YStack className="gap-4">
+      <div className="flex items-center justify-between">
+        <YStack className="gap-2">
+          <h3 className="text-3xl font-bold">
+            All Users <Badge className="font-bol px-4 text-lg">100 users</Badge>
+          </h3>
+          <p>Manage employees (Server side table functionalities.)</p>
         </YStack>
 
-        <div className="flex items-center justify-between py-2">
-          <XStack className="gap-2">
-            <Input placeholder="Search for users" className="w-[275px]" />
-            <XStack>
-              <Button
-                variant="ghost"
-                className="opacity-50 hover:opacity-100"
-                size="icon"
-              >
-                <Eye />
+        <XStack className="gap-4">
+          <Input placeholder="Search for users" className="w-[300px]" />
+
+          <Tabs defaultValue="account" className="">
+            <TabsList className="">
+              <TabsTrigger className="" value="account">
+                Table
+              </TabsTrigger>
+              <TabsTrigger className="" value="password">
+                Grid
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <Button className="flex gap-2">
+            <Plus />
+            Add user
+          </Button>
+
+          <Popover>
+            <PopoverTrigger>
+              <Button variant="outline" className="flex gap-2">
+                View Options
               </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              align="end"
+              sideOffset={8}
+              className="flex flex-col gap-4"
+            >
+              <XStack className="justify-between">
+                <span>Title</span>
 
-              <Button
-                variant="ghost"
-                className="opacity-50 hover:opacity-100"
-                size="icon"
-              >
-                <Trash2 />
-              </Button>
-            </XStack>
-          </XStack>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Button variant="outline" className="flex gap-2">
+                      View Options
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                    <DropdownMenuItem>Team</DropdownMenuItem>
+                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </XStack>
 
-          <XStack className="gap-4">
-            <Button className="flex gap-2">
-              <Plus />
-              Add user
-            </Button>
-            <Button variant="outline" className="flex gap-2">
-              <FileDown />
-              Export
-            </Button>
-          </XStack>
-        </div>
+              <XStack className="justify-between">
+                <Label>Group By</Label>
 
-        {/* Table */}
-        <div>
-          <DataTable<Person> data={defaultData} columns={columns} />
-        </div>
+                <Select>
+                  <SelectTrigger className="w-[120px]">
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="light">Light</SelectItem>
+                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                  </SelectContent>
+                </Select>
+              </XStack>
+
+              <XStack className="justify-between">
+                <Label>Order By</Label>
+                <Select>
+                  <SelectTrigger className="w-[120px]">
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="light">Light</SelectItem>
+                    <SelectItem value="dark">Dark</SelectItem>
+                    <SelectItem value="system">System</SelectItem>
+                  </SelectContent>
+                </Select>
+              </XStack>
+
+              <XStack>
+                <Tabs defaultValue="account" className="w-full">
+                  <TabsList className="w-full">
+                    <TabsTrigger className="w-full" value="account">
+                      Ascending
+                    </TabsTrigger>
+                    <TabsTrigger className="w-full" value="password">
+                      Descending
+                    </TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </XStack>
+
+              <YStack className="gap-2">
+                <Label className="mb-2">Properties</Label>
+                <XStack className="flex-wrap items-center justify-center gap-2">
+                  <Button
+                    size="sm"
+                    className="h-[28px] rounded-full px-3"
+                    variant="outline"
+                  >
+                    Toggle
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    className="h-[28px] rounded-full px-3"
+                    variant="outline"
+                  >
+                    Toggle
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    className="h-[28px] rounded-full px-3"
+                    variant="outline"
+                  >
+                    Toggle
+                  </Button>
+
+                  <Button
+                    size="sm"
+                    className="h-[28px] rounded-full px-3"
+                    variant="outline"
+                  >
+                    Toggle
+                  </Button>
+                </XStack>
+              </YStack>
+
+              <YStack>
+                <Separator className="mb-4" />
+                <Button
+                  variant="outline"
+                  className="flex w-full justify-start gap-2"
+                >
+                  <FileDown />
+                  <span className="flex w-full items-center justify-center">
+                    Export
+                  </span>
+                </Button>
+              </YStack>
+            </PopoverContent>
+          </Popover>
+        </XStack>
       </div>
-    </div>
+
+      <DataTable<Person> data={defaultData} columns={columns} capacity={10} />
+    </YStack>
   );
 };
 

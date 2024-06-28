@@ -34,9 +34,7 @@ const ReportOverviewColumn: ColumnDef<ReportOverviewValue, any>[] = [
     enableSorting: false,
     enableHiding: false,
   }),
-  columnHelper.accessor("id", {
-    header: "ID",
-  }),
+
   columnHelper.accessor("name", {
     header: "Full Name",
   }),
