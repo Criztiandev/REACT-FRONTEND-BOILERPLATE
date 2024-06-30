@@ -14,7 +14,7 @@ interface Props<T> {
 
 const TableHeader = <T,>({ table }: Props<T>) => {
   return (
-    <TableHeaderComponent>
+    <TableHeaderComponent className="bg-gray-200 dark:bg-gray-900">
       {table.getHeaderGroups().map((headerGroup) => (
         <TableRow key={headerGroup.id}>
           {headerGroup.headers.map((header) => {
@@ -22,7 +22,7 @@ const TableHeader = <T,>({ table }: Props<T>) => {
               <>
                 <TableHead
                   key={header.id}
-                  className="cursor-pointer rounded-[5px] hover:bg-background/90"
+                  className="cursor-pointer hover:bg-background/90"
                 >
                   {header.isPlaceholder
                     ? null

@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
 import AuthRoutes from "./feature/auth/routes";
-import AdminRoutes from "./feature/admin/routes/main.routes";
+import AdminRoutes from "./pages/admin/DashboardScreen/routes/main.routes";
 
 const App = () => {
   const isAuthenticated = true;

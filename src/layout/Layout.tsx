@@ -6,9 +6,7 @@ import { cn } from "@/lib/utils";
 import Sidebar from "./Sidebar";
 import { NavigationRouteValue } from "@/interface/routes";
 
-import NotificationSheet from "@/shared/container/sheet/NotificationSheet";
-import { useAtom, useAtomValue } from "jotai";
-import { notificationPanelAtom } from "@/service/state/account.atom";
+import { useAtomValue } from "jotai";
 import { sidebarPanelAtom } from "@/service/state/general.atom";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -22,9 +20,6 @@ const Layout: FC<Props> = ({
   sidebarRoute = [],
   ...props
 }) => {
-  const [notificationPanelValue, setNotificationPanelValue] = useAtom(
-    notificationPanelAtom,
-  );
   const isSidebarToggle = useAtomValue(sidebarPanelAtom);
   // ml-[17.2rem]
   return (
@@ -44,14 +39,6 @@ const Layout: FC<Props> = ({
           </div>
         </Wrapper>
       </div>
-
-      {notificationPanelValue && (
-        <NotificationSheet
-          title="Notification"
-          open={notificationPanelValue}
-          onOpenChange={() => setNotificationPanelValue((prev) => !prev)}
-        />
-      )}
     </>
   );
 };

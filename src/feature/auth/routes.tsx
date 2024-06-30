@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginScreen from "./views/LoginScreen";
-import RegisterScreen from "./views/RegisterScreen";
-import ForgotPasswordScreen from "./views/ForgotPasswordScreen";
-import RecoverScreen from "./views/RecoverScreen";
-import ChangePasswordScreen from "./views/ChangePasswordScreen";
+import LoginScreen from "../../modules/auth/screen/LoginScreen";
+import RegisterScreen from "../../modules/auth/screen/RegisterScreen";
+import ForgotPasswordScreen from "../../modules/auth/screen/ForgotPasswordScreen";
+import RecoverScreen from "../../modules/auth/screen/RecoverScreen";
+import ChangePasswordScreen from "../../modules/auth/screen/ChangePasswordScreen";
 import withProtectedRoute from "@/components/hoc/withProtectedRoute";
 import PageNotFound from "../static/view/PageNotFound";
 
