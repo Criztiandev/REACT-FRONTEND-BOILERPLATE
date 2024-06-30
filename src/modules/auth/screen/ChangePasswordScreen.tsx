@@ -1,4 +1,3 @@
-import React from "react";
 import ChangePasswordForm from "../containers/form/ChangePasswordForm";
 
 const ChangePasswordScreen = () => {
